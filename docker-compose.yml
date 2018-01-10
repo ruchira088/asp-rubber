@@ -23,8 +23,8 @@ services:
   product-service:
     build: ./product-service
     ports:
-      - 8001:8000
-      - 5006:5005
+      - 8001:8001
+      - 5006:5006
     depends_on:
       - api-gateway
       - postgres-database
@@ -33,6 +33,10 @@ services:
       - "~/.sbt:/root/.sbt"
       - "./product-service:/opt/product-service"
       - "/opt/product-service/target"
+    environment:
+      POSTGRES_URL: "jdbc:postgresql://postgres-database:5432/asp_rubber"
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
 
   postgres-database:
     image: postgres
