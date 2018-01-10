@@ -20,6 +20,29 @@ services:
       REDIS_HOST: "redis-kv-store"
       REDIS_PORT: "6379"
 
+  product-service:
+    build: ./product-service
+    ports:
+      - 8001:8000
+      - 5006:5005
+    depends_on:
+      - api-gateway
+      - postgres-database
+    volumes:
+      - "~/.ivy2:/root/.ivy2"
+      - "~/.sbt:/root/.sbt"
+      - "./product-service:/opt/product-service"
+      - "/opt/product-service/target"
+
+  postgres-database:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: asp_rubber
+
   mongo-database:
     image: mongo
     ports:
