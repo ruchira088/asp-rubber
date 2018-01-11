@@ -38,6 +38,17 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
 
+  web-app:
+    build: ./web-app
+    ports:
+      - 8002:8002
+    depends_on:
+      - api-gateway
+      - product-service
+    volumes:
+      - "./web-app:/opt/web-app"
+      - "/opt/web-app/node_modules"
+
   postgres-database:
     image: postgres
     ports:
